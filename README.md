@@ -5,6 +5,6 @@
 <h3>Design Criteria</h3>
 <p>FilmFiesta was designed with the following user needs in mind:</p>
 <ul>
-  <li>1. As a user, I want to be able to receive information on movies, main actors, and supporting actors and genres so that I can learn more about the movies that I have watched or am interested in.</li>
+  <li><strong>1.</strong>strong As a user, I want to be able to receive information on movies, main actors, and supporting actors and genres so that I can learn more about the movies that I have watched or am interested in.</li>
   <li>2. As a user, I want to be able to create a profile so I can save data about my favorite movies.</li>
 </ul>
