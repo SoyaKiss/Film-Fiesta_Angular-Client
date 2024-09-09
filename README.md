@@ -14,13 +14,11 @@
 <ul>
   <li><strong>Welcome View: </strong> Users can either log in or register for an account on the welcome screen.</li>
   <li><strong>Movies List View: </strong> Authenticated users can view all movies available in the database.</li>
-  <li><strong>Single Movie Vieww: </strong>Users can click on a movie to see more details, including:</li>
+  <li><strong>Single Movie View: </strong>Users can click on a movie to see more details, including:</li>
     <ul>
       <li><strong>Main Actor View: </strong> Users can access details about the movie's main actor by clicking a button.</li>
       <li><strong>Supporting Actor View: </strong> Users can access details about the movie's supporting actor by clicking a button.</li> 
       <li><strong>Genre View: </strong> Users can access details about the genre of the movie by clicking a button.</li> 
     </ul>
-      
-  <li><strong>Profile Management: </strong>Users can create and manage their profile, including adding and removing favorite movies.</li>
-
+<li><strong>Profile Management: </strong>Users can create and manage their profile, including adding and removing favorite movies.</li>
 </ul>
