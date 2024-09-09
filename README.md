@@ -28,7 +28,7 @@
 
 <br>
 
-<h3>user Stories</h3>
+<h3>User Stories</h3>
 <ul>
   <li><strong>User Story 1: </strong>As a user, I want to be able to receive information on movies, directors, and genres so that I can learn more about movies I’ve watched or am interested in.</li>
   <li><strong>User Story 2: </strong>As a user, I want to be able to create a profile so I can save data about my favorite movies.</li>
@@ -44,4 +44,48 @@
   <li>The application’s UI is designed using <strong>Angular Material</strong> for a modern look and feel.</li>
   <li>The codebase contains comments using <strong>Typedoc</strong> for better code understanding and maintenance.</li>
   <li><strong>JSDoc</strong> is used for technical documentation to help developers understand the project structure and functionality.</li>
-  </ul>
+</ul>
+
+  <br>
+
+
+<h3>Installation and Setup</h3>
+<ul>
+<li><strong>1. Clone the Repository: </strong> git clone https://github.com/yourusername/FilmFiesta-Angular-client.git </li>
+<li><strong>2. Navigate to the Project Directory: </strong> cd FilmFiesta-Angular-client </li>
+<li><strong>3. Install Dependencies: </strong> Ensure you have Node.js installed, then run: npm install </li>
+<li><strong>4. Run the Application: </strong> Start the development server: ng serve </li>
+<li>Navigate to http://localhost:4200/ in your browser to see the application in action.</li>
+</ul>
+
+<br>
+
+<h3>Usage</h3>
+<ul>
+  <li><strong>Login or Register: </strong> Start by logging in or creating an account. </li>
+  <li><strong>Browse Movies: </strong> View the list of movies, and click on a movie to see more details. </li>
+  <li><strong>Explore Main Actors, Supporting Actors and Genres: </strong> Click on the main actor, supporting actor or genre buttons within the movie details view to learn more. </li>
+  <li><strong>Manage Your Profile: </strong> Create and manage your profile, including adding movies to your favorites list. </li>
+</ul>
+
+<br>
+
+<h3>Technical Documentation</h3>
+<ul>
+  <li><strong>Code Comments: </strong> All methods and critical code paths are documented using Typedoc comments. </li>
+  <li><strong>JSDoc Documentation: </strong> The project includes JSDoc-generated documentation for developers looking to understand or extend the application. </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
