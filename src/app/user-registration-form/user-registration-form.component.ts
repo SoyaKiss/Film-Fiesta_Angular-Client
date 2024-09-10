@@ -34,14 +34,18 @@ export class UserRegistrationFormComponent {
 
   // Function to handle user registration
   registerUser(): void {
+    console.log('User Data:', this.userData);
+
     this.fetchApiData.userRegistration(this.userData).subscribe(
       (response) => {
         this.dialogRef.close();
+        console.log('Registration successful:', response);
         this.snackBar.open('User registered successfully!', 'OK', {
           duration: 2000,
         });
       },
       (error) => {
+        console.error('Registration failed:', error); // Log the error response
         this.snackBar.open('Registration failed. Please try again.', 'OK', {
           duration: 2000,
         });

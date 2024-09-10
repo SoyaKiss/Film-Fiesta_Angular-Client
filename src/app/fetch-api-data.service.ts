@@ -14,11 +14,10 @@ const apiUrl = 'https://film-fiesta-2f42541ec594.herokuapp.com/';
   providedIn: 'root',
 })
 export class FetchApiDataService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {} // Ensure no circular dependency is created
 
-  // User Registration
-  public userRegistration(userDetails: any): Observable<any> {
-    console.log(userDetails);
+  // Example of refactoring shared code into functions without circular dependencies
+  userRegistration(userDetails: any): Observable<any> {
     return this.http
       .post(apiUrl + 'users', userDetails)
       .pipe(catchError(this.handleError));
@@ -171,12 +170,12 @@ export class FetchApiDataService {
     return res || {};
   }
 
-  private handleError(error: HttpErrorResponse): any {
+  private handleError(error: HttpErrorResponse): Observable<never> {
     if (error.error instanceof ErrorEvent) {
-      console.error('Some error occurred:', error.error.message);
+      console.error('An error occurred:', error.error.message);
     } else {
       console.error(
-        `Error Status code ${error.status}, ` + `Error body is: ${error.error}`
+        `Backend returned code ${error.status}, ` + `body was: ${error.error}`
       );
     }
     return throwError('Something bad happened; please try again later.');

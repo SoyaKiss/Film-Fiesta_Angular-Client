@@ -12,6 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
+import { provideHttpClient } from '@angular/common/http';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -27,5 +28,6 @@ bootstrapApplication(AppComponent, {
       MatFormFieldModule,
       MatSnackBarModule
     ),
+    provideHttpClient(),
   ],
 }).catch((err) => console.error(err));

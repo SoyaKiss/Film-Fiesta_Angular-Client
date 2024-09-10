@@ -12,6 +12,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -28,6 +29,7 @@ import { AppRoutingModule } from './app-routing.module';
     MatCardModule,
     MatFormFieldModule,
     MatSnackBarModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [],
