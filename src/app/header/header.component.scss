@@ -1,0 +1,42 @@
+/* Main header styling */
+.app-header {
+  display: flex;
+  justify-content: space-between; /* Space between logo and navigation links */
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #ffffff; /* Set background color if needed */
+  border-bottom: 1px solid #ddd; /* Optional: light border for separation */
+}
+
+/* Logo styling */
+.logo {
+  height: 40px; /* Adjust height for consistent sizing */
+  cursor: pointer;
+}
+
+/* Navigation links styling */
+.nav-links {
+  display: flex;
+  gap: 10px; /* Space between the buttons */
+  margin-left: auto; /* Pushes the buttons to the right */
+}
+
+/* Button styling to match the Sign Up modal */
+button[mat-raised-button] {
+  border-radius: 25px; /* Matching rounded corners */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  font-size: 0.9rem; /* Adjust font size to match */
+  padding: 5px 15px; /* Adjust padding for consistency */
+  background-color: #3f51b5 !important; /* Primary blue color */
+  color: white !important; /* White text color */
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+button[mat-raised-button]:hover {
+  background-color: #303f9f !important; /* Matching hover effect */
+}
+
+button[mat-raised-button]:focus {
+  outline: none; /* Remove focus outline */
+}

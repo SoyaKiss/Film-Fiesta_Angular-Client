@@ -1,31 +1,37 @@
 <!-- movie-card.component.html -->
 <div class="movie-cards-container">
-  <mat-card *ngFor="let movie of movies" class="movie-card">
-    <!-- Movie image -->
-    <img mat-card-image [src]="movie.ImageURL" alt="{{ movie.Title }}" />
+  <mat-card *ngFor="let movie of movies; let i = index" class="movie-card">
+    <div class="movie-content">
+      <mat-card-content>
+        <!-- Display movie title -->
+        <mat-card-title>{{ movie.Title }}</mat-card-title>
 
-    <mat-card-content>
-      <!-- Display movie title -->
-      <mat-card-title>{{ movie.Title }}</mat-card-title>
+        <!-- Display movie image -->
 
-      <!-- Display director and genre -->
-      <mat-card-subtitle>
-        Directed by {{ movie.mainActor.Name }} &
-        {{ movie.supportingActor.Name }}
-      </mat-card-subtitle>
+        <img mat-card-image [src]="movie.ImageURL" alt="{{ movie.Title }}" />
 
-      <!-- Display genre and short description if needed -->
-      <p>
-        <strong>Genre:</strong> {{ movie.Genre.Name }} <br />
-        <strong>Description:</strong>
-        {{ movie.Description | slice : 0 : 100 }}...
-      </p>
-    </mat-card-content>
+        <!-- Display main and supporting actors -->
+        <p class="movie-info">
+          <strong>Main Actor:</strong> {{ movie.mainActor.Name }}<br />
+          <strong>Supporting Actor:</strong> {{ movie.supportingActor.Name }}
+        </p>
 
-    <!-- Optional: Add buttons for more details, like synopsis or favorite -->
-    <mat-card-actions>
-      <button mat-button color="primary">Synopsis</button>
-      <button mat-button color="accent">❤️ Favorite</button>
-    </mat-card-actions>
+        <!-- Display genre and description -->
+        <p class="movie-info"><strong>Genre:</strong> {{ movie.Genre.Name }}</p>
+        <p class="movie-info">
+          <strong>Description:</strong>
+          {{ movie.Description | slice : 0 : 100 }}...
+        </p>
+      </mat-card-content>
+    </div>
+
+    <div class="button-container">
+      <button mat-raised-button color="primary" class="movie-button">
+        Synopsis
+      </button>
+      <button mat-raised-button color="primary" class="movie-button">
+        Favorite
+      </button>
+    </div>
   </mat-card>
 </div>

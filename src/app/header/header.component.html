@@ -1,0 +1,20 @@
+<!-- header.component.html -->
+<header class="app-header">
+  <img
+    src="../../assets/logo-no-background.svg"
+    alt="Film Fiesta Logo"
+    class="logo"
+  />
+
+  <nav class="nav-links">
+    <button mat-raised-button color="primary" (click)="goToProfile()">
+      Profile
+    </button>
+    <button mat-raised-button color="primary" (click)="goToFavorites()">
+      Favorite Movies
+    </button>
+    <button mat-raised-button color="primary" (click)="logout()">
+      Log Out
+    </button>
+  </nav>
+</header>

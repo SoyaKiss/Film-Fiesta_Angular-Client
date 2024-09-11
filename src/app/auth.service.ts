@@ -1,28 +1,40 @@
+// auth.service.ts
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root', // This makes the service available throughout the app without needing to import it in the module
+  providedIn: 'root',
 })
 export class AuthService {
-  private isLoggedIn = false; // State to track login status
+  private isLoggedIn = false;
 
-  constructor() {}
+  constructor() {
+    // On initialization, synchronize the in-memory state with local storage
+    this.isLoggedIn = this.checkLocalStorage();
+  }
+
+  // Synchronize in-memory state with local storage
+  private checkLocalStorage(): boolean {
+    return localStorage.getItem('isLoggedIn') === 'true';
+  }
 
   // Method to log in the user
   login(): void {
     this.isLoggedIn = true;
-    localStorage.setItem('isLoggedIn', 'true'); // Save the login state in local storage
+    localStorage.setItem('isLoggedIn', 'true');
   }
 
   // Method to log out the user
   logout(): void {
     this.isLoggedIn = false;
-    localStorage.removeItem('isLoggedIn'); // Clear the login state from local storage
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('token'); // Remove the token if stored
+    localStorage.removeItem('username'); // Remove the username if stored
   }
 
   // Method to check if the user is logged in
   isAuthenticated(): boolean {
-    // Check the in-memory state or fallback to local storage state
-    return this.isLoggedIn || localStorage.getItem('isLoggedIn') === 'true';
+    // Check both the in-memory state and synchronize with local storage state
+    this.isLoggedIn = this.checkLocalStorage();
+    return this.isLoggedIn;
   }
 }

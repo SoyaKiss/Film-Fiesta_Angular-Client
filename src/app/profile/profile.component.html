@@ -1,1 +1,15 @@
-<p>profile works!</p>
+<!-- profile.component.html -->
+<div class="profile-container">
+  <h2>User Profile</h2>
+  <p><strong>Username:</strong> {{ user.Username }}</p>
+  <p><strong>Email:</strong> {{ user.Email }}</p>
+  <p><strong>Birthday:</strong> {{ user.Birthday | date }}</p>
+
+  <!-- Add buttons for profile actions -->
+  <button mat-button color="primary" (click)="editProfile()">
+    Edit Profile
+  </button>
+  <button mat-button color="warn" (click)="deleteAccount()">
+    Delete Account
+  </button>
+</div>

@@ -1,40 +1,49 @@
 /* Container for the movie cards */
 .movie-cards-container {
-  display: grid; /* Use CSS Grid for layout */
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(250px, 1fr)
-  ); /* Auto-fill with a minimum width of 250px */
-  gap: 20px; /* Space between cards */
-  padding: 20px; /* Padding around the container */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
 }
 
 /* Individual movie card styling */
 .movie-card {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for 3D effect */
-  border-radius: 8px; /* Rounded corners */
-  transition: transform 0.3s ease; /* Smooth transition for hover effect */
+  max-width: 300px;
+  margin: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensure content is spaced evenly */
+  height: 100%; /* Make card full height */
 }
 
-/* Lift the card slightly on hover */
-.movie-card:hover {
-  transform: translateY(-5px);
+.movie-content {
+  flex-grow: 1; /* Allow content to grow and push buttons down */
 }
 
-/* Title styling */
+.movie-image {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.actor-info {
+  margin: 10px 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
 mat-card-title {
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-/* Subtitle styling */
 mat-card-subtitle {
   font-size: 0.9rem;
   color: gray;
 }
 
-/* Paragraph styling */
 mat-card-content p {
   font-size: 0.85rem;
   margin-top: 5px;
@@ -44,6 +53,33 @@ mat-card-content p {
 img {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 25px; /* Add space between the buttons */
+  margin-top: 10px; /* Add some space above the buttons */
+  margin-bottom: 20px;
+}
+
+button[mat-raised-button] {
+  border-radius: 25px; /* Matching rounded corners */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  font-size: 0.9rem; /* Adjust font size to match */
+  padding: 5px 15px; /* Adjust padding for consistency */
+  background-color: #3f51b5 !important; /* Primary blue color */
+  color: white !important; /* White text color */
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+button[mat-raised-button]:hover {
+  background-color: #303f9f;
+}
+
+button[mat-raised-button]:focus {
+  outline: none;
 }
 
 /* Responsive adjustments for smaller screens */
