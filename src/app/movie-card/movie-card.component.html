@@ -1,12 +1,31 @@
-<!-- Display movies using *ngFor -->
-<mat-card *ngFor="let movie of movies; let i = index">
-  <mat-card-content>
-    <!-- Display movie title -->
-    <mat-card-title>{{ movie.Title }}</mat-card-title>
+<!-- movie-card.component.html -->
+<div class="movie-cards-container">
+  <mat-card *ngFor="let movie of movies" class="movie-card">
+    <!-- Movie image -->
+    <img mat-card-image [src]="movie.ImageURL" alt="{{ movie.Title }}" />
 
-    <!-- Display movie image -->
-    <mat-card-subtitle>
-      <img [src]="movie.ImagePath" alt="{{ movie.Title }}" />
-    </mat-card-subtitle>
-  </mat-card-content>
-</mat-card>
+    <mat-card-content>
+      <!-- Display movie title -->
+      <mat-card-title>{{ movie.Title }}</mat-card-title>
+
+      <!-- Display director and genre -->
+      <mat-card-subtitle>
+        Directed by {{ movie.mainActor.Name }} &
+        {{ movie.supportingActor.Name }}
+      </mat-card-subtitle>
+
+      <!-- Display genre and short description if needed -->
+      <p>
+        <strong>Genre:</strong> {{ movie.Genre.Name }} <br />
+        <strong>Description:</strong>
+        {{ movie.Description | slice : 0 : 100 }}...
+      </p>
+    </mat-card-content>
+
+    <!-- Optional: Add buttons for more details, like synopsis or favorite -->
+    <mat-card-actions>
+      <button mat-button color="primary">Synopsis</button>
+      <button mat-button color="accent">❤️ Favorite</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

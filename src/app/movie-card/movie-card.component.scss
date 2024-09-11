@@ -1,0 +1,54 @@
+/* Container for the movie cards */
+.movie-cards-container {
+  display: grid; /* Use CSS Grid for layout */
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(250px, 1fr)
+  ); /* Auto-fill with a minimum width of 250px */
+  gap: 20px; /* Space between cards */
+  padding: 20px; /* Padding around the container */
+}
+
+/* Individual movie card styling */
+.movie-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for 3D effect */
+  border-radius: 8px; /* Rounded corners */
+  transition: transform 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Lift the card slightly on hover */
+.movie-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Title styling */
+mat-card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Subtitle styling */
+mat-card-subtitle {
+  font-size: 0.9rem;
+  color: gray;
+}
+
+/* Paragraph styling */
+mat-card-content p {
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+/* Image styling to match the card’s rounded corners */
+img {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+  .movie-cards-container {
+    grid-template-columns: 1fr; /* Stack cards in a single column on small screens */
+  }
+}
