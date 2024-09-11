@@ -29,6 +29,7 @@ bootstrapApplication(AppComponent, {
       MatFormFieldModule,
       MatSnackBarModule
     ),
-    provideHttpClient(), provideAnimationsAsync(),
+    provideHttpClient(),
+    provideAnimationsAsync(),
   ],
 }).catch((err) => console.error(err));

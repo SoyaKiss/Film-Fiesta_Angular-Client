@@ -1,0 +1,12 @@
+<!-- Display movies using *ngFor -->
+<mat-card *ngFor="let movie of movies; let i = index">
+  <mat-card-content>
+    <!-- Display movie title -->
+    <mat-card-title>{{ movie.Title }}</mat-card-title>
+
+    <!-- Display movie image -->
+    <mat-card-subtitle>
+      <img [src]="movie.ImagePath" alt="{{ movie.Title }}" />
+    </mat-card-subtitle>
+  </mat-card-content>
+</mat-card>

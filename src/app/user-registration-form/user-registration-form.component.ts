@@ -51,8 +51,17 @@ export class UserRegistrationFormComponent {
 
     this.fetchApiData.userRegistration(this.userData).subscribe(
       (response) => {
-        this.dialogRef.close();
+        // Save the token and user data to localStorage upon successful registration
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(response.user));
         console.log('Registration successful:', response);
+        console.log(
+          'Token saved in localStorage:',
+          localStorage.getItem('token')
+        ); // Debug log to confirm token storage
+
+        this.dialogRef.close(); // Close the dialog
+
         this.snackBar.open('User registered successfully!', 'OK', {
           duration: 2000,
         });

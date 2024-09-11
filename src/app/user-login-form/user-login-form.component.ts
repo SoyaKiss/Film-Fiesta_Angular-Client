@@ -36,17 +36,15 @@ export class UserLoginFormComponent {
   loginUser(): void {
     this.fetchApiData.userLogin(this.loginData).subscribe(
       (response) => {
-        // On success, save the token and user to localStorage
         localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify(response.user));
-        this.dialogRef.close(); // Close the dialog
-        console.log('Login successful', response);
+        this.dialogRef.close('success'); // Pass 'success' when login is successful
         this.snackBar.open('Login successful!', 'OK', {
           duration: 2000,
         });
       },
-      (response) => {
-        console.error('Login failed', response);
+      (error) => {
+        console.error('Login failed', error);
         this.snackBar.open(
           'Login failed. Please check your credentials.',
           'OK',

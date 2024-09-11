@@ -16,12 +16,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
+import { RouterModule } from '@angular/router';
+
+import { AppComponent } from './app.component';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { MovieCardComponent } from './movie-card/movie-card.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
@@ -33,9 +39,11 @@ import { AppRoutingModule } from './app-routing.module';
     MatSnackBarModule,
     HttpClientModule,
     CommonModule,
+    WelcomePageComponent,
+    MovieCardComponent,
   ],
   providers: [],
-  bootstrap: [],
+  bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })
 export class AppModule {}
