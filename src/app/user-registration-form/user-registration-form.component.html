@@ -13,11 +13,9 @@
           type="text"
           name="fullName"
           required
+          autocomplete="name"
           #fullName="ngModel"
         />
-        <mat-error *ngIf="fullName.invalid && fullName.touched">
-          Full Name is required.
-        </mat-error>
       </mat-form-field>
 
       <!-- Username Field -->
@@ -29,6 +27,7 @@
           type="text"
           name="Username"
           required
+          autocomplete="username"
           #username="ngModel"
         />
       </mat-form-field>
@@ -42,6 +41,7 @@
           placeholder="Password"
           name="Password"
           required
+          autocomplete="new-password"
         />
       </mat-form-field>
 
@@ -54,6 +54,7 @@
           placeholder="Email"
           name="Email"
           required
+          autocomplete="email"
         />
       </mat-form-field>
 
