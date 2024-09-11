@@ -1,0 +1,45 @@
+/* welcome-page.component.scss */
+.main-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Full height of the viewport */
+  background-color: #f4f4f4; /* Light background color for consistency */
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 30px; /* Space below the title */
+}
+
+.button-container {
+  display: flex;
+  gap: 10px; /* Space between the buttons */
+  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+}
+
+.primary-button {
+  display: block;
+  margin: 0 auto; /* Center the button */
+  padding: 10px 20px; /* Match padding with Sign Up modal buttons */
+  background-color: #3f51b5 !important; /* Button color */
+  color: white !important; /* Text color */
+  border: none;
+  border-radius: 25px; /* Rounded corners to match the Sign Up modal */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for a 3D effect */
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.primary-button:hover {
+  background-color: #303f9f !important; /* Darker color on hover */
+}
+
+.primary-button:focus {
+  outline: none; /* Remove focus outline */
+}
