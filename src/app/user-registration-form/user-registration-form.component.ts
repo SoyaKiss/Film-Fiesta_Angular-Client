@@ -24,7 +24,13 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./user-registration-form.component.scss'],
 })
 export class UserRegistrationFormComponent {
-  @Input() userData = { Username: '', Password: '', Email: '', Birthday: '' };
+  @Input() userData = {
+    Username: '',
+    Password: '',
+    Email: '',
+    Birthday: '',
+    fullName: '',
+  };
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -34,7 +40,14 @@ export class UserRegistrationFormComponent {
 
   // Function to handle user registration
   registerUser(): void {
-    console.log('User Data:', this.userData);
+    if (!this.userData.fullName) {
+      console.error('Full Name is Required');
+      this.snackBar.open('Full Name is required.', 'OK', {
+        duration: 2000,
+      });
+
+      return;
+    }
 
     this.fetchApiData.userRegistration(this.userData).subscribe(
       (response) => {

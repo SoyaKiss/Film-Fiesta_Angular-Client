@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideHttpClient } from '@angular/common/http';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -28,6 +29,6 @@ bootstrapApplication(AppComponent, {
       MatFormFieldModule,
       MatSnackBarModule
     ),
-    provideHttpClient(),
+    provideHttpClient(), provideAnimationsAsync(),
   ],
 }).catch((err) => console.error(err));
