@@ -1,11 +1,20 @@
-<!-- profile.component.html -->
 <div class="profile-container">
   <h2>User Profile</h2>
-  <p><strong>Username:</strong> {{ user.Username }}</p>
-  <p><strong>Email:</strong> {{ user.Email }}</p>
-  <p><strong>Birthday:</strong> {{ user.Birthday | date }}</p>
+  <form #editForm="ngForm">
+    <label>
+      <strong>Username:</strong>
+      <input [(ngModel)]="user.Username" name="username" required />
+    </label>
+    <label>
+      <strong>Email:</strong>
+      <input type="email" [(ngModel)]="user.Email" name="email" required />
+    </label>
+    <label>
+      <strong>Birthday:</strong>
+      <input type="date" [(ngModel)]="user.Birthday" name="birthday" />
+    </label>
+  </form>
 
-  <!-- Add buttons for profile actions -->
   <button mat-button color="primary" (click)="editProfile()">
     Edit Profile
   </button>

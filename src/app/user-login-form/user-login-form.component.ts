@@ -38,6 +38,7 @@ export class UserLoginFormComponent {
       (response) => {
         localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify(response.user));
+        localStorage.setItem('username', response.user.Username); // Add this line to store the username separately
         this.dialogRef.close('success'); // Pass 'success' when login is successful
         this.snackBar.open('Login successful!', 'OK', {
           duration: 2000,

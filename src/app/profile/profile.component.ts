@@ -4,11 +4,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatButtonModule],
+  imports: [CommonModule, MatDialogModule, MatButtonModule, FormsModule],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
@@ -26,11 +27,12 @@ export class ProfileComponent implements OnInit {
 
   // Method to get user information
   getUserInfo(): void {
-    const username = localStorage.getItem('username'); // Assuming username is stored in local storage
+    const username = localStorage.getItem('username'); // Fetch the username from local storage
     if (username) {
+      // Fetch user information using the username
       this.fetchApiData.getUser(username).subscribe(
         (resp: any) => {
-          this.user = resp;
+          this.user = resp; // Assign the response data to the user object
           console.log('User information fetched successfully:', this.user);
         },
         (error) => {
@@ -41,7 +43,11 @@ export class ProfileComponent implements OnInit {
         }
       );
     } else {
+      // Handle the case where the username is not found in local storage
       console.error('Username not found in local storage.');
+      this.snackBar.open('Please log in again.', 'OK', { duration: 3000 });
+      // Optional: Redirect the user to the login page if needed
+      // this.router.navigate(['/login']);
     }
   }
 
