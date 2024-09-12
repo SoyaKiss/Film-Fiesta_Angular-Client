@@ -1,0 +1,50 @@
+<div class="favorite-movies-container">
+  <mat-card *ngFor="let movie of favoriteMovies" class="movie-card">
+    <div class="movie-content">
+      <mat-card-content>
+        <!-- Display movie title -->
+        <div class="title-container">
+          <mat-card-title>{{ movie.Title }}</mat-card-title>
+        </div>
+
+        <!-- Display movie image -->
+        <img mat-card-image [src]="movie.ImageURL" alt="{{ movie.Title }}" />
+
+        <!-- Display genre with only Action as a link -->
+        <p class="movie-info">
+          <strong>Genre: </strong>
+        </p>
+
+        <!-- Display main actor with only the actor's name as a link -->
+        <div class="actor-container">
+          <p class="movie-info">
+            <strong>Main Actor: </strong>
+          </p>
+        </div>
+
+        <!-- Display supporting actor with only the actor's name as a link -->
+        <div class="actor-container">
+          <p class="movie-info">
+            <strong>Supporting Actor: </strong>
+          </p>
+        </div>
+
+        <!-- Display description of the movie -->
+        <p class="movie-info">
+          <strong>Description: </strong>
+          {{ movie.Description | slice : 0 : 100 }}...
+        </p>
+
+        <div class="button-container">
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="removeFavorite(movie._id)"
+          >
+            Remove
+          </button>
+        </div>
+      </mat-card-content>
+    </div>
+  </mat-card>
+</div>

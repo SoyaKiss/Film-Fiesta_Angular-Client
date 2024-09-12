@@ -1,0 +1,11 @@
+<mat-card class="mini-movie-card">
+  <img mat-card-image [src]="movie.ImageURL" alt="{{ movie.Title }}" />
+  <mat-card-title>{{ movie.Title }}</mat-card-title>
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="removeFromFavorites(movie._id)"
+  >
+    Remove
+  </button>
+</mat-card>

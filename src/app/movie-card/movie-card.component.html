@@ -1,36 +1,56 @@
-<!-- movie-card.component.html -->
 <div class="movie-cards-container">
   <mat-card *ngFor="let movie of movies; let i = index" class="movie-card">
     <div class="movie-content">
       <mat-card-content>
-        <!-- Display movie title -->
-        <mat-card-title>{{ movie.Title }}</mat-card-title>
+        <div class="movie-title">
+          <mat-card-title>{{ movie.Title }}</mat-card-title>
+        </div>
 
-        <!-- Display movie image -->
+        <img
+          class="movie-image"
+          [src]="movie.ImageURL"
+          alt="{{ movie.Title }}"
+        />
 
-        <img mat-card-image [src]="movie.ImageURL" alt="{{ movie.Title }}" />
-
-        <!-- Display main and supporting actors -->
         <p class="movie-info">
-          <strong>Main Actor:</strong> {{ movie.mainActor.Name }}<br />
-          <strong>Supporting Actor:</strong> {{ movie.supportingActor.Name }}
+          <strong>Main Actor:</strong>
+          <a href="#" (click)="openActorDialog(movie.mainActor, $event)">
+            {{ movie.mainActor.Name }}
+          </a>
         </p>
-
-        <!-- Display genre and description -->
-        <p class="movie-info"><strong>Genre:</strong> {{ movie.Genre.Name }}</p>
+        <p class="movie-info">
+          <strong>Supporting Actor:</strong>
+          <a
+            href="#"
+            (click)="openSupportingActorDialog(movie.supportingActor, $event)"
+          >
+            {{ movie.supportingActor.Name }}
+          </a>
+        </p>
+        <p class="movie-info">
+          <strong>Genre:</strong>
+          <a href="#" (click)="openGenreDialog(movie.Genre, $event)">
+            {{ movie.Genre.Name }}
+          </a>
+        </p>
         <p class="movie-info">
           <strong>Description:</strong>
-          {{ movie.Description | slice : 0 : 100 }}...
+          <a href="#" (click)="openDescriptionDialog(movie, $event)">
+            Read more...
+          </a>
         </p>
       </mat-card-content>
     </div>
 
     <div class="button-container">
-      <button mat-raised-button color="primary" class="movie-button">
-        Synopsis
-      </button>
-      <button mat-raised-button color="primary" class="movie-button">
-        Favorite
+      <!-- Modified Favorite Button -->
+      <button
+        mat-raised-button
+        [ngClass]="{ 'added-to-favorites': isFavorite(movie) }"
+        (click)="toggleFavorite(movie)"
+        class="movie-button"
+      >
+        {{ isFavorite(movie) ? "Added to Favorites!" : "Favorite" }}
       </button>
     </div>
   </mat-card>
