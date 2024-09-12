@@ -1,24 +1,72 @@
-<div class="profile-container">
-  <h2>User Profile</h2>
-  <form #editForm="ngForm">
-    <label>
-      <strong>Username:</strong>
-      <input [(ngModel)]="user.Username" name="username" required />
-    </label>
-    <label>
-      <strong>Email:</strong>
-      <input type="email" [(ngModel)]="user.Email" name="email" required />
-    </label>
-    <label>
-      <strong>Birthday:</strong>
-      <input type="date" [(ngModel)]="user.Birthday" name="birthday" />
-    </label>
-  </form>
+<mat-card class="profile-card">
+  <mat-card-header>
+    <mat-card-title>Edit User Profile</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form #editForm="ngForm">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          [(ngModel)]="user.Username"
+          name="username"
+          required
+          autocomplete="username"
+        />
+      </mat-form-field>
 
-  <button mat-button color="primary" (click)="editProfile()">
-    Edit Profile
-  </button>
-  <button mat-button color="warn" (click)="deleteAccount()">
-    Delete Account
-  </button>
-</div>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          [(ngModel)]="user.Email"
+          name="email"
+          required
+          autocomplete="email"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Full Name</mat-label>
+        <input
+          matInput
+          [(ngModel)]="user.fullName"
+          name="fullName"
+          required
+          autocomplete="fullName"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          [(ngModel)]="user.Password"
+          name="password"
+          autocomplete="password"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Birthday</mat-label>
+        <input
+          matInput
+          type="date"
+          [(ngModel)]="user.Birthday"
+          name="birthday"
+          autocomplete="birthday"
+        />
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="editProfile()">
+      Save Changes
+    </button>
+    <button mat-raised-button color="warn" (click)="deleteAccount()">
+      Delete Account
+    </button>
+  </mat-card-actions>
+</mat-card>

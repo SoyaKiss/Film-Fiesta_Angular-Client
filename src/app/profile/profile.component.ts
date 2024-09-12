@@ -5,11 +5,22 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatButtonModule, FormsModule],
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    MatButtonModule,
+    FormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
@@ -33,7 +44,6 @@ export class ProfileComponent implements OnInit {
       this.fetchApiData.getUser(username).subscribe(
         (resp: any) => {
           this.user = resp; // Assign the response data to the user object
-          console.log('User information fetched successfully:', this.user);
         },
         (error) => {
           console.error('Error fetching user information:', error);
@@ -53,17 +63,28 @@ export class ProfileComponent implements OnInit {
 
   // Method to edit user profile
   editProfile(): void {
-    const username = localStorage.getItem('username'); // Fetch username
+    const username = localStorage.getItem('username');
     if (username) {
-      const updatedDetails = {
+      const updatedDetails: any = {
         Username: this.user.Username,
         Email: this.user.Email,
+        fullName: this.user.fullName,
         Birthday: this.user.Birthday,
       };
+
+      // Include password only if it is being updated
+      if (this.user.Password) {
+        updatedDetails.Password = this.user.Password;
+      }
+
       this.fetchApiData.editUser(username, updatedDetails).subscribe(
         (resp) => {
-          this.user = resp;
-          console.log('Profile updated successfully:', this.user);
+          this.user = resp.user;
+          // Check if a new token is returned and update it in local storage
+          if (resp.token) {
+            localStorage.setItem('token', resp.token);
+          }
+
           this.snackBar.open('Profile updated successfully!', 'OK', {
             duration: 3000,
           });
@@ -80,7 +101,16 @@ export class ProfileComponent implements OnInit {
 
   // Method to delete user account
   deleteAccount(): void {
-    const username = localStorage.getItem('username'); // Fetch username
+    // Prompt the user to confirm account deletion
+    const confirmed = window.confirm(
+      'Are you sure you want to delete your account? This action cannot be undone.'
+    );
+
+    if (!confirmed) {
+      return; // Exit if the user cancels the action
+    }
+
+    const username = localStorage.getItem('username');
     if (username) {
       this.fetchApiData.deleteUser(username).subscribe(
         (resp) => {
@@ -88,13 +118,29 @@ export class ProfileComponent implements OnInit {
           this.snackBar.open('Account deleted successfully!', 'OK', {
             duration: 3000,
           });
-          // Perform any necessary cleanup, such as logging out and redirecting
+
+          // Clear local storage and redirect to the welcome page (default route)
+          localStorage.clear();
+          window.location.href = '/'; // Redirects to the default route which is the WelcomePageComponent
         },
         (error) => {
           console.error('Error deleting account:', error);
-          this.snackBar.open('Error deleting account.', 'OK', {
-            duration: 3000,
-          });
+          this.snackBar.open(
+            'Error deleting account. Please try again later.',
+            'OK',
+            {
+              duration: 3000,
+            }
+          );
+
+          // Handle 401 errors: clear session and guide the user to re-login or welcome page
+          if (error.status === 401) {
+            this.snackBar.open('Session expired. Please log in again.', 'OK', {
+              duration: 3000,
+            });
+            localStorage.clear();
+            window.location.href = '/'; // Redirects to the WelcomePageComponent
+          }
         }
       );
     }

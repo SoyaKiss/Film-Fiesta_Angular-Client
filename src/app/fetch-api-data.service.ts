@@ -120,7 +120,7 @@ export class FetchApiDataService {
   // Delete User completely
   deleteUser(username: string): Observable<any> {
     return this.http
-      .delete(apiUrl + `users/${username}`, { headers: this.createHeaders() })
+      .delete(`${apiUrl}users/${username}`, { headers: this.createHeaders() }) // Ensure headers are correct
       .pipe(catchError(this.handleError));
   }
 

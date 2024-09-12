@@ -55,10 +55,7 @@ export class UserRegistrationFormComponent {
         localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify(response.user));
         console.log('Registration successful:', response);
-        console.log(
-          'Token saved in localStorage:',
-          localStorage.getItem('token')
-        ); // Debug log to confirm token storage
+        console.log('Token saved in localStorage:'); // Debug log to confirm token storage
 
         this.dialogRef.close(); // Close the dialog
 

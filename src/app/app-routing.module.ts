@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent }, // Route to Login Page
   { path: 'movies', component: MovieCardComponent }, // Route to Movies Page
   { path: 'profile', component: ProfileComponent }, // Route to Profile Page
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({
