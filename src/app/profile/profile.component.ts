@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -29,7 +30,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private fetchApiData: FetchApiDataService,
-    private snackBar: MatSnackBar // Inject MatSnackBar to show error messages
+    private snackBar: MatSnackBar, // Inject MatSnackBar to show error messages
+    private router: Router // Inject Router
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +40,9 @@ export class ProfileComponent implements OnInit {
 
   // Method to get user information
   getUserInfo(): void {
-    const username = localStorage.getItem('username'); // Fetch the username from local storage
+    const user = JSON.parse(localStorage.getItem('user') || '{}'); // Fetch user data from local storage
+    const username = user.Username || localStorage.getItem('username'); // Check for username from user data or fallback
+
     if (username) {
       // Fetch user information using the username
       this.fetchApiData.getUser(username).subscribe(
@@ -56,8 +60,7 @@ export class ProfileComponent implements OnInit {
       // Handle the case where the username is not found in local storage
       console.error('Username not found in local storage.');
       this.snackBar.open('Please log in again.', 'OK', { duration: 3000 });
-      // Optional: Redirect the user to the login page if needed
-      // this.router.navigate(['/login']);
+      this.router.navigate(['login']); // Redirect to login if the username is missing
     }
   }
 

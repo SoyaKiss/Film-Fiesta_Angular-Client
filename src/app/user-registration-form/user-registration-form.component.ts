@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-registration-form',
@@ -35,36 +36,33 @@ export class UserRegistrationFormComponent {
   constructor(
     public fetchApiData: FetchApiDataService,
     public dialogRef: MatDialogRef<UserRegistrationFormComponent>,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private router: Router // Add Router to handle navigation
   ) {}
 
   // Function to handle user registration
   registerUser(): void {
     if (!this.userData.fullName) {
-      console.error('Full Name is Required');
-      this.snackBar.open('Full Name is required.', 'OK', {
-        duration: 2000,
-      });
-
+      this.snackBar.open('Full Name is required.', 'OK', { duration: 2000 });
       return;
     }
 
     this.fetchApiData.userRegistration(this.userData).subscribe(
       (response) => {
-        // Save the token and user data to localStorage upon successful registration
         localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify(response.user));
+        localStorage.setItem('username', response.user.Username); // Save the username here
         console.log('Registration successful:', response);
-        console.log('Token saved in localStorage:'); // Debug log to confirm token storage
-
-        this.dialogRef.close(); // Close the dialog
-
         this.snackBar.open('User registered successfully!', 'OK', {
           duration: 2000,
         });
+
+        window.dispatchEvent(new Event('userAuthenticated'));
+        this.dialogRef.close();
+        this.router.navigate(['movies']);
       },
       (error) => {
-        console.error('Registration failed:', error); // Log the error response
+        console.error('Registration failed:', error);
         this.snackBar.open('Registration failed. Please try again.', 'OK', {
           duration: 2000,
         });

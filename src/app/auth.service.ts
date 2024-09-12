@@ -1,4 +1,3 @@
-// auth.service.ts
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -21,6 +20,7 @@ export class AuthService {
   login(): void {
     this.isLoggedIn = true;
     localStorage.setItem('isLoggedIn', 'true');
+    this.notifyAuthenticationChange(); // Notify that the user is now authenticated
   }
 
   // Method to log out the user
@@ -29,12 +29,19 @@ export class AuthService {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('token'); // Remove the token if stored
     localStorage.removeItem('username'); // Remove the username if stored
+    this.notifyAuthenticationChange(); // Notify that the user is now logged out
   }
 
   // Method to check if the user is logged in
   isAuthenticated(): boolean {
-    // Check both the in-memory state and synchronize with local storage state
-    this.isLoggedIn = this.checkLocalStorage();
-    return this.isLoggedIn;
+    const token = localStorage.getItem('token');
+    const isLoggedIn = !!token;
+    console.log('Checking authentication:', isLoggedIn, 'Token:', token); // Debugging log
+    return isLoggedIn;
+  }
+
+  // Method to notify other components when the authentication state changes
+  notifyAuthenticationChange(): void {
+    window.dispatchEvent(new Event('userAuthenticated')); // Dispatch custom event to signal authentication change
   }
 }
