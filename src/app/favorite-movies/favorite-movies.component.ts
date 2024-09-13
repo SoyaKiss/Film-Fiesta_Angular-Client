@@ -43,10 +43,11 @@ export class FavoriteMoviesComponent implements OnInit {
       this.fetchApiData.getFavoriteMovies(username).subscribe({
         next: (movies: any[]) => {
           console.log('Fetched favorite movies:', movies);
+          // Ensure each movie has required properties; map and fetch details if necessary
           this.favoriteMovies = movies.map((movie) => ({
             _id: movie._id,
             Title: movie.Title || 'No Title Available',
-            ImageURL: movie.ImageURL || 'https://via.placeholder.com/150',
+            ImageURL: movie.ImageURL || 'https://via.placeholder.com/150', // Placeholder image if missing
           }));
         },
         error: (error: any) => {
@@ -64,8 +65,7 @@ export class FavoriteMoviesComponent implements OnInit {
     ids.forEach((id: string) => {
       this.fetchApiData.getOneMovie(id).subscribe(
         (movie: Movie) => {
-          // Check if movie has essential fields before pushing it
-          if (movie && movie._id && movie.Title && movie.ImageURL) {
+          if (movie && movie._id) {
             this.favoriteMovies.push(movie);
             console.log('Fetched complete movie:', movie);
           } else {

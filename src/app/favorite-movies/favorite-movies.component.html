@@ -1,8 +1,7 @@
-<div class="favorite-movies-container">
+<div *ngFor="let movie of favoriteMovies">
   <app-favorite-movie-card
-    *ngFor="let movie of favoriteMovies"
+    *ngIf="movie && movie._id"
     [movie]="movie"
-    (remove)="removeFavorite(movie._id)"
-    class="favorite-movie-card"
+    (remove)="removeFavorite($event)"
   ></app-favorite-movie-card>
 </div>

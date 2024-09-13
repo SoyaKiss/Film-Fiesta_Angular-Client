@@ -1,20 +1,7 @@
-<mat-card class="mini-movie-card">
-  <!-- Display the movie image or a default placeholder if missing -->
-  <img
-    mat-card-image
-    [src]="movie?.ImageURL || 'https://via.placeholder.com/150'"
-    alt="{{ movie?.Title || 'No Title Available' }}"
-  />
-
-  <!-- Display the movie title or a default message if missing -->
-  <mat-card-title>{{ movie?.Title || "Title Unavailable" }}</mat-card-title>
-
-  <!-- Keep the Remove button and its click functionality -->
-  <button
-    mat-raised-button
-    color="warn"
-    (click)="removeFromFavorites(movie?._id)"
-  >
-    Remove
+<mat-card>
+  <h3>{{ movie?.Title || "No Title Available" }}</h3>
+  <img *ngIf="movie?.ImageURL" [src]="movie?.ImageURL" alt="Movie Image" />
+  <button mat-button (click)="removeFromFavorites(movie?._id)">
+    Remove from Favorites
   </button>
 </mat-card>

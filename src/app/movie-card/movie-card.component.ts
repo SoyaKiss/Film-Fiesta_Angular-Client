@@ -19,6 +19,7 @@ import { MovieDetailsDialogComponent } from '../movie-details-dialog/movie-detai
 export class MovieCardComponent implements OnInit {
   movies: any[] = [];
   favoriteMovies: Set<string> = new Set(); // Set to track favorite movies
+  user: any = {};
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -27,8 +28,13 @@ export class MovieCardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loadUser();
     this.getMovies();
-    this.loadFavoriteMovies(); // Load favorite movies on initialization
+    this.loadFavoriteMovies(); // Ensure this method is correctly defined
+  }
+
+  loadUser(): void {
+    this.user = JSON.parse(localStorage.getItem('user') || '{}');
   }
 
   getMovies(): void {
@@ -67,7 +73,7 @@ export class MovieCardComponent implements OnInit {
     );
   }
 
-  // Load favorite movies from local storage
+  // Ensure this method is properly defined
   loadFavoriteMovies(): void {
     const savedFavorites = localStorage.getItem('favoriteMovies');
     if (savedFavorites) {
@@ -75,32 +81,51 @@ export class MovieCardComponent implements OnInit {
     }
   }
 
-  // Toggle favorite status of a movie
   toggleFavorite(movie: any): void {
-    if (this.favoriteMovies.has(movie._id)) {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const username = this.user.Username || localStorage.getItem('username');
+
+    if (this.isFavorite(movie)) {
       // Remove from favorites
-      this.favoriteMovies.delete(movie._id);
-      this.snackBar.open('Removed from Favorites!', 'OK', { duration: 2000 });
+      this.fetchApiData.deleteFavoriteMovie(username, movie._id).subscribe({
+        next: (response) => {
+          this.favoriteMovies.delete(movie._id);
+          this.snackBar.open('Removed from Favorites!', 'OK', {
+            duration: 2000,
+          });
+          this.saveFavoriteMovies();
+        },
+        error: (error) => {
+          console.log('Error removing from favorites:', error);
+        },
+      });
     } else {
       // Add to favorites
-      this.favoriteMovies.add(movie._id);
-      this.snackBar.open('Added to Favorites!', 'OK', { duration: 2000 });
+      this.fetchApiData.addFavoriteMovie(username, movie._id).subscribe({
+        next: (response) => {
+          this.favoriteMovies.add(movie._id);
+          this.snackBar.open('Added to Favorites!', 'OK', { duration: 2000 });
+          this.saveFavoriteMovies();
+        },
+        error: (error) => {
+          console.log('Error adding to favorites:', error);
+        },
+      });
     }
-    this.saveFavoriteMovies();
   }
 
-  // Check if movie is a favorite
   isFavorite(movie: any): boolean {
     return this.favoriteMovies.has(movie._id);
   }
 
-  // Save favorite movies to local storage
   saveFavoriteMovies(): void {
     localStorage.setItem(
       'favoriteMovies',
       JSON.stringify(Array.from(this.favoriteMovies))
     );
   }
+
+  // All dialogs below:
 
   // Open Main Actor Dialog
   openActorDialog(actor: any, event: Event): void {
