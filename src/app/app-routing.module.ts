@@ -5,14 +5,14 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { MovieCardComponent } from './movie-card/movie-card.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component';
-import { FavoriteMovieCardComponent } from './favorite-movie-card/favorite-movie-card.component';
+// import { FavoriteMovieCardComponent } from './favorite-movie-card/favorite-movie-card.component';
 
 const routes: Routes = [
   { path: '', component: WelcomePageComponent }, // Default route to Welcome Page
   { path: 'login', component: LoginComponent }, // Route to Login Page
   { path: 'movies', component: MovieCardComponent }, // Route to Movies Page
   { path: 'profile', component: ProfileComponent }, // Route to Profile Page
-  { path: 'favorites', component: FavoriteMovieCardComponent },
+  // { path: 'favorites', component: FavoriteMovieCardComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
