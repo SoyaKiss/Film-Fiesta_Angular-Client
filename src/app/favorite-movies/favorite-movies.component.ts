@@ -3,44 +3,91 @@ import { FetchApiDataService } from '../fetch-api-data.service'; // Ensure the s
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { FavoriteMovieCardComponent } from '../favorite-movie-card/favorite-movie-card.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+interface Movie {
+  _id: string;
+  Title?: string;
+  ImageURL?: string;
+  [key: string]: any;
+}
 
 @Component({
   selector: 'app-favorite-movies',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    FavoriteMovieCardComponent,
+  ],
   templateUrl: './favorite-movies.component.html',
   styleUrls: ['./favorite-movies.component.scss'],
 })
 export class FavoriteMoviesComponent implements OnInit {
-  favoriteMovies: any[] = [];
+  favoriteMovies: Movie[] = [];
 
-  constructor(private fetchApiData: FetchApiDataService) {}
+  constructor(
+    private fetchApiData: FetchApiDataService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.loadFavoriteMovies();
   }
 
-  // Fetch favorite movies from local storage and then fetch their full details
   loadFavoriteMovies(): void {
-    const username = localStorage.getItem('username'); // Assuming username is stored in local storage
+    const username = localStorage.getItem('username');
     if (username) {
-      this.fetchApiData.getFavoriteMovies(username).subscribe(
-        (movies) => {
-          this.favoriteMovies = movies;
-          console.log('Loaded favorite movies:', this.favoriteMovies);
+      this.fetchApiData.getFavoriteMovies(username).subscribe({
+        next: (movies: any[]) => {
+          console.log('Fetched favorite movies:', movies);
+          this.favoriteMovies = movies.map((movie) => ({
+            _id: movie._id,
+            Title: movie.Title || 'No Title Available',
+            ImageURL: movie.ImageURL || 'https://via.placeholder.com/150',
+          }));
         },
-        (error) => {
+        error: (error: any) => {
           console.error('Error fetching favorite movies:', error);
-        }
-      );
+        },
+        complete: () => {
+          console.log('Fetching favorite movies completed.');
+        },
+      });
     }
   }
 
+  // Fetch details of each movie by its ID
+  fetchMovieDetails(ids: string[]): void {
+    ids.forEach((id: string) => {
+      this.fetchApiData.getOneMovie(id).subscribe(
+        (movie: Movie) => {
+          // Check if movie has essential fields before pushing it
+          if (movie && movie._id && movie.Title && movie.ImageURL) {
+            this.favoriteMovies.push(movie);
+            console.log('Fetched complete movie:', movie);
+          } else {
+            console.warn('Fetched movie is incomplete:', movie);
+          }
+        },
+        (error: any) => {
+          console.error('Error fetching movie details:', error);
+        }
+      );
+    });
+  }
+
+  // Remove a movie from the favorites list
   removeFavorite(movieId: string): void {
     this.favoriteMovies = this.favoriteMovies.filter(
-      (movie) => movie._id !== movieId
+      (movie: Movie) => movie._id !== movieId
     );
-    const updatedFavorites = this.favoriteMovies.map((movie) => movie._id);
+    const updatedFavorites = this.favoriteMovies.map(
+      (movie: Movie) => movie._id
+    );
     localStorage.setItem('favoriteMovies', JSON.stringify(updatedFavorites));
+    this.snackBar.open('Removed from Favorites!', 'OK', { duration: 2000 });
   }
 }

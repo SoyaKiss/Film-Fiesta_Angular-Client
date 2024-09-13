@@ -133,6 +133,17 @@ export class FetchApiDataService {
       .pipe(catchError(this.handleError));
   }
 
+  // Fetch multiple movie details by their IDs
+  getMoviesDetails(movieIds: string[]): Observable<any> {
+    return this.http
+      .post(
+        apiUrl + 'movies/details',
+        { movieIds },
+        { headers: this.createHeaders() }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
   private extractResponseData(res: any): any {
     return res || {};
   }
