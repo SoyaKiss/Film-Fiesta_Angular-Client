@@ -1,11 +1,12 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-genre-dialog',
   standalone: true,
-  imports: [MatDialogModule, CommonModule], // Required imports
+  imports: [MatDialogModule, CommonModule, MatButtonModule], // Required imports
   template: `
     <h2 mat-dialog-title>{{ data.genre.Name }}</h2>
     <mat-dialog-content>

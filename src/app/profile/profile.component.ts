@@ -101,10 +101,8 @@ export class ProfileComponent implements OnInit {
       );
     }
   }
-
   // Method to delete user account
   deleteAccount(): void {
-    // Prompt the user to confirm account deletion
     const confirmed = window.confirm(
       'Are you sure you want to delete your account? This action cannot be undone.'
     );
@@ -117,8 +115,9 @@ export class ProfileComponent implements OnInit {
     if (username) {
       this.fetchApiData.deleteUser(username).subscribe(
         (resp) => {
+          // Handle the response correctly
           console.log('Account deleted successfully:', resp);
-          this.snackBar.open('Account deleted successfully!', 'OK', {
+          this.snackBar.open(resp, 'OK', {
             duration: 3000,
           });
 
@@ -136,7 +135,6 @@ export class ProfileComponent implements OnInit {
             }
           );
 
-          // Handle 401 errors: clear session and guide the user to re-login or welcome page
           if (error.status === 401) {
             this.snackBar.open('Session expired. Please log in again.', 'OK', {
               duration: 3000,

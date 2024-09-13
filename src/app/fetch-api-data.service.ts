@@ -120,8 +120,19 @@ export class FetchApiDataService {
   // Delete User completely
   deleteUser(username: string): Observable<any> {
     return this.http
-      .delete(`${apiUrl}users/${username}`, { headers: this.createHeaders() }) // Ensure headers are correct
-      .pipe(catchError(this.handleError));
+      .delete(`${apiUrl}users/${username}`, {
+        headers: this.createHeaders(),
+        responseType: 'text',
+      }) // Specify responseType as 'text'
+      .pipe(
+        map((response: any) => {
+          // Log the response to ensure proper handling
+          console.log('Response from deleteUser:', response);
+          // Return the response to the component
+          return response;
+        }),
+        catchError(this.handleError)
+      );
   }
 
   // Delete a movie from the Fav Movie List
@@ -154,15 +165,14 @@ export class FetchApiDataService {
       console.error('An error occurred:', error.error.message);
     } else {
       // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
       console.error(
         `Backend returned code ${error.status}, body was: ${error.error}`
       );
 
-      // Log specific errors based on status codes for better debugging
+      // Additional handling based on status codes for better feedback
       switch (error.status) {
         case 404:
-          console.error('Error 404: Resource not found. Please check the URL.');
+          console.error('Error 404: User not found.');
           break;
         case 400:
           console.error('Error 400: Bad request. Check the sent parameters.');

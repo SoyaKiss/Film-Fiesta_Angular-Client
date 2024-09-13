@@ -13,13 +13,13 @@
         />
 
         <p class="movie-info">
-          <strong>Main Actor:</strong>
+          <span class="info-label">Main Actor:</span>
           <a href="#" (click)="openActorDialog(movie.mainActor, $event)">
             {{ movie.mainActor.Name }}
           </a>
         </p>
         <p class="movie-info">
-          <strong>Supporting Actor:</strong>
+          <span class="info-label">Supporting Actor:</span>
           <a
             href="#"
             (click)="openSupportingActorDialog(movie.supportingActor, $event)"
@@ -28,13 +28,13 @@
           </a>
         </p>
         <p class="movie-info">
-          <strong>Genre:</strong>
+          <span class="info-label">Genre:</span>
           <a href="#" (click)="openGenreDialog(movie.Genre, $event)">
             {{ movie.Genre.Name }}
           </a>
         </p>
         <p class="movie-info">
-          <strong>Description:</strong>
+          <span class="info-label">Description:</span>
           <a href="#" (click)="openDescriptionDialog(movie, $event)">
             Read more...
           </a>
