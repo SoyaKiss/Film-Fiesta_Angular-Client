@@ -1,11 +1,25 @@
+/**
+ * @file favorite-movies.component.ts
+ * @description Component responsible for displaying and managing a user's favorite movies. It fetches favorite
+ * movie details from an API and allows users to remove movies from their favorites list.
+ */
+
 import { Component, OnInit } from '@angular/core';
 import { FetchApiDataService } from '../fetch-api-data.service'; // Ensure the service path is correct
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-
 // import { FavoriteMovieCardComponent } from '../favorite-movie-card/favorite-movie-card.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+/**
+ * Interface for Movie objects.
+ * @interface Movie
+ * @property {string} _id - The unique identifier of the movie.
+ * @property {string} [Title] - Optional title of the movie.
+ * @property {string} [ImageURL] - Optional image URL of the movie.
+ * @property {any} [key: string] - Allows for any additional properties.
+ */
 
 interface Movie {
   _id: string;
@@ -27,12 +41,28 @@ interface Movie {
   styleUrls: ['./favorite-movies.component.scss'],
 })
 export class FavoriteMoviesComponent implements OnInit {
+  /**
+   * @property {Movie[]} favoriteMovies - An array of favorite movies fetched from the API.
+   */
+
   favoriteMovies: Movie[] = [];
+
+  /**
+   * @constructor
+   * @param {FetchApiDataService} fetchApiData - Service used to fetch data from the API.
+   * @param {MatSnackBar} snackBar - Service used to display notifications to the user.
+   */
 
   constructor(
     private fetchApiData: FetchApiDataService,
     private snackBar: MatSnackBar
   ) {}
+
+  /**
+   * @method ngOnInit
+   * @description Lifecycle hook that initializes the component. Currently, it loads favorite movies but can be
+   * expanded as needed.
+   */
 
   ngOnInit(): void {
     // this.loadFavoriteMovies();
@@ -40,6 +70,7 @@ export class FavoriteMoviesComponent implements OnInit {
 }
 
 // Temporarily disable this until we can resolve it
+
 // loadFavoriteMovies(): void {
 //     const username = localStorage.getItem('username');
 //     if (username) {
@@ -85,3 +116,20 @@ export class FavoriteMoviesComponent implements OnInit {
 //     this.snackBar.open('Removed from Favorites!', 'OK', { duration: 2000 });
 //   }
 // }
+
+/**
+ * Method to remove a movie from the favorites list.
+ * @param {string} movieId - The ID of the movie to be removed from favorites.
+ */
+/*
+removeFavorite(movieId: string): void {
+    this.favoriteMovies = this.favoriteMovies.filter(
+      (movie: Movie) => movie._id !== movieId
+    );
+    const updatedFavorites = this.favoriteMovies.map(
+      (movie: Movie) => movie._id
+    );
+    localStorage.setItem('favoriteMovies', JSON.stringify(updatedFavorites));
+    this.snackBar.open('Removed from Favorites!', 'OK', { duration: 2000 });
+  }
+*/

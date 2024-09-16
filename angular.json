@@ -89,6 +89,13 @@
             "styles": ["src/styles.scss"],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "baseHref": "/Film-Fiesta-Angular-app/",
+            "repo": "https://github.com/SoyaKiss/Film-Fiesta-Angular-app.git"
+          }
         }
       }
     }

@@ -1,3 +1,9 @@
+/**
+ * @file app.module.ts
+ * @description The root module of the Angular application. This module is responsible for bootstrapping the application
+ * and importing all necessary Angular and third-party modules, components, and services.
+ */
+
 import {
   NgModule,
   CUSTOM_ELEMENTS_SCHEMA,
@@ -20,6 +26,12 @@ import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
+
+/**
+ * @module AppModule
+ * @description The root module of the Angular application that imports and configures all other necessary modules.
+ * This module bootstraps the main application and sets up essential services and schemas.
+ */
 
 @NgModule({
   declarations: [],

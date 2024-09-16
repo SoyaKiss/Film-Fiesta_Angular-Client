@@ -1,3 +1,9 @@
+/**
+ * @file favorite-movie-card.component.ts
+ * @description Component for displaying a favorite movie card with options to view complete movie details and
+ * remove the movie from the favorites list.
+ */
+
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -13,19 +19,44 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./favorite-movie-card.component.scss'],
 })
 export class FavoriteMovieCardComponent implements OnInit {
+  /**
+   * @property {any} movie - The movie data passed as an input. Expected to contain properties like _id, Title,
+   * and ImageURL.
+   */
+
   @Input() movie: any; // Movie data will be passed in as an input
+
+  /**
+   * @property {EventEmitter<string>} remove - Event emitter that sends the movie ID when a movie is removed from
+   * the favorites list.
+   */
   @Output() remove = new EventEmitter<string>(); // EventEmitter to handle removal
 
+  /**
+   * @constructor
+   * @param {MatSnackBar} snackBar - Angular Material Snackbar service for displaying notifications.
+   * @param {FetchApiDataService} fetchApiData - Service for fetching movie data from the backend.
+   */
   constructor(
     private snackBar: MatSnackBar,
     private fetchApiData: FetchApiDataService // Inject FetchApiDataService
   ) {}
 
+  /**
+   * @method ngOnInit
+   * @description Lifecycle hook that runs after the component is initialized. Calls method to validate the movie
+   * data.
+   */
   ngOnInit(): void {
     this.checkMovieData();
   }
 
-  // Method to check the movie data validity
+  /**
+   * @method checkMovieData
+   * @description Checks if the movie data is valid. If the data is incomplete, it attempts to fetch missing movie
+   * details from the backend.
+   */
+
   checkMovieData(): void {
     if (!this.movie || !this.movie._id) {
       console.warn('Received undefined or incomplete movie data:', this.movie);
@@ -40,7 +71,12 @@ export class FavoriteMovieCardComponent implements OnInit {
     }
   }
 
-  // Fetch complete movie details if data is missing
+  /**
+   * @method fetchMissingMovieData
+   * @description Fetches complete movie details if the provided data is incomplete.
+   * @param {string} movieId - The ID of the movie to fetch details for.
+   */
+
   fetchMissingMovieData(movieId: string): void {
     this.fetchApiData.getOneMovie(movieId).subscribe(
       (fullMovie: any) => {
@@ -66,6 +102,12 @@ export class FavoriteMovieCardComponent implements OnInit {
       }
     );
   }
+
+  /**
+   * @method removeFromFavorites
+   * @description Emits the movie ID to the parent component to remove the movie from the favorites list.
+   * @param {string} movieId - The ID of the movie to be removed.
+   */
 
   removeFromFavorites(movieId: string): void {
     if (!movieId) {

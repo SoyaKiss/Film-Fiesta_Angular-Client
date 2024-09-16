@@ -1,5 +1,11 @@
+/**
+ * @file profile.component.ts
+ * @description Component that handles displaying and managing user profile information, including fetching user data,
+ * updating profile details, and deleting the user account.
+ */
+
 import { Component, OnInit } from '@angular/core';
-import { FetchApiDataService } from '../fetch-api-data.service'; // Import the service to fetch user data
+import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,28 +32,48 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  user: any = {}; // Placeholder for user data
+  /**
+   * @property {any} user - Object containing user profile data.
+   */
+
+  user: any = {};
+
+  /**
+   * @constructor
+   * @param {FetchApiDataService} fetchApiData - Service to handle API requests for user data.
+   * @param {MatSnackBar} snackBar - Service to display notifications.
+   * @param {Router} router - Service for navigation between routes.
+   */
 
   constructor(
     private fetchApiData: FetchApiDataService,
-    private snackBar: MatSnackBar, // Inject MatSnackBar to show error messages
-    private router: Router // Inject Router
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
+  /**
+   * @method ngOnInit
+   * @description Lifecycle hook that runs when the component is initialized. It fetches the user information.
+   */
+
   ngOnInit(): void {
-    this.getUserInfo(); // Fetch user information when the component initializes
+    this.getUserInfo();
   }
 
-  // Method to get user information
+  /**
+   * @method getUserInfo
+   * @description Fetches the user information from local storage and updates the user object. If the username is missing,
+   * it redirects to the login page.
+   */
+
   getUserInfo(): void {
-    const user = JSON.parse(localStorage.getItem('user') || '{}'); // Fetch user data from local storage
-    const username = user.Username || localStorage.getItem('username'); // Check for username from user data or fallback
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const username = user.Username || localStorage.getItem('username');
 
     if (username) {
-      // Fetch user information using the username
       this.fetchApiData.getUser(username).subscribe(
         (resp: any) => {
-          this.user = resp; // Assign the response data to the user object
+          this.user = resp;
         },
         (error) => {
           console.error('Error fetching user information:', error);
@@ -57,14 +83,18 @@ export class ProfileComponent implements OnInit {
         }
       );
     } else {
-      // Handle the case where the username is not found in local storage
       console.error('Username not found in local storage.');
       this.snackBar.open('Please log in again.', 'OK', { duration: 3000 });
-      this.router.navigate(['login']); // Redirect to login if the username is missing
+      this.router.navigate(['login']);
     }
   }
 
-  // Method to edit user profile
+  /**
+   * @method editProfile
+   * @description Allows the user to update their profile information. Sends the updated details to the server and updates
+   * the user object locally if the update is successful.
+   */
+
   editProfile(): void {
     const username = localStorage.getItem('username');
     if (username) {
@@ -101,7 +131,13 @@ export class ProfileComponent implements OnInit {
       );
     }
   }
-  // Method to delete user account
+
+  /**
+   * @method deleteAccount
+   * @description Deletes the user account after confirming the action. If successful, clears local storage and redirects
+   * to the welcome page. Handles errors by showing appropriate messages and handling session expiration.
+   */
+
   deleteAccount(): void {
     const confirmed = window.confirm(
       'Are you sure you want to delete your account? This action cannot be undone.'

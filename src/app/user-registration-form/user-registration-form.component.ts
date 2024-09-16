@@ -1,3 +1,9 @@
+/**
+ * @file user-registration-form.component.ts
+ * @description Component responsible for user registration. It handles the user input, registration process, and
+ * subsequent navigation upon successful registration.
+ */
+
 import { Component, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FetchApiDataService } from '../fetch-api-data.service';
@@ -25,6 +31,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-registration-form.component.scss'],
 })
 export class UserRegistrationFormComponent {
+  /**
+   * @property {object} userData - Contains the user's registration details.
+   * @property {string} userData.Username - The username entered by the user.
+   * @property {string} userData.Password - The password entered by the user.
+   * @property {string} userData.Email - The email address entered by the user.
+   * @property {string} userData.Birthday - The birthday entered by the user.
+   * @property {string} userData.fullName - The full name entered by the user.
+   */
+
   @Input() userData = {
     Username: '',
     Password: '',
@@ -33,6 +48,14 @@ export class UserRegistrationFormComponent {
     fullName: '',
   };
 
+  /**
+   * @constructor
+   * @param {FetchApiDataService} fetchApiData - Service to handle API requests.
+   * @param {MatDialogRef<UserRegistrationFormComponent>} dialogRef - Reference to the dialog that opened this component.
+   * @param {MatSnackBar} snackBar - Service to display snack bar notifications.
+   * @param {Router} router - Service to navigate to different routes.
+   */
+
   constructor(
     public fetchApiData: FetchApiDataService,
     public dialogRef: MatDialogRef<UserRegistrationFormComponent>,
@@ -40,7 +63,12 @@ export class UserRegistrationFormComponent {
     private router: Router // Add Router to handle navigation
   ) {}
 
-  // Function to handle user registration
+  /**
+   * @method registerUser
+   * @description Handles user registration by sending the user data to the API. Displays success or error messages
+   * based on the outcome and navigates to the movies page upon successful registration.
+   */
+
   registerUser(): void {
     if (!this.userData.fullName) {
       this.snackBar.open('Full Name is required.', 'OK', { duration: 2000 });

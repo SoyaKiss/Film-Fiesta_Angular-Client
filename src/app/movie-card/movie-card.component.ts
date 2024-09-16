@@ -1,3 +1,9 @@
+/**
+ * @file movie-card.component.ts
+ * @description Component responsible for displaying movie cards, managing favorite movies, and providing dialog interactions
+ * for actors, genres, and movie details using Angular Material.
+ */
+
 import { Component, OnInit } from '@angular/core';
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatCardModule } from '@angular/material/card';
@@ -17,9 +23,22 @@ import { MovieDetailsDialogComponent } from '../movie-details-dialog/movie-detai
   styleUrls: ['./movie-card.component.scss'],
 })
 export class MovieCardComponent implements OnInit {
+  /**
+   * @property {any[]} movies - Array to store movie data fetched from the API.
+   * @property {Set<string>} favoriteMovies - Set to track the user's favorite movies by their IDs.
+   * @property {any} user - Object to hold the user's data, including username and other details.
+   */
+
   movies: any[] = [];
   favoriteMovies: Set<string> = new Set(); // Set to track favorite movies
   user: any = {};
+
+  /**
+   * @constructor
+   * @param {FetchApiDataService} fetchApiData - Service to handle API requests related to movies and user data.
+   * @param {MatSnackBar} snackBar - Service to display notifications.
+   * @param {MatDialog} dialog - Service to open dialogs for actors, genres, and movie details.
+   */
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -27,15 +46,31 @@ export class MovieCardComponent implements OnInit {
     private dialog: MatDialog
   ) {}
 
+  /**
+   * @method ngOnInit
+   * @description Lifecycle hook that runs when the component is initialized. Loads user data, fetches movies,
+   * and loads favorite movies from local storage.
+   */
+
   ngOnInit(): void {
     this.loadUser();
     this.getMovies();
-    this.loadFavoriteMovies(); // Ensure this method is correctly defined
+    this.loadFavoriteMovies();
   }
+
+  /**
+   * @method loadUser
+   * @description Loads the user data from local storage and assigns it to the user property.
+   */
 
   loadUser(): void {
     this.user = JSON.parse(localStorage.getItem('user') || '{}');
   }
+
+  /**
+   * @method getMovies
+   * @description Fetches the list of movies from the API. If the user is not authenticated, it shows an error message.
+   */
 
   getMovies(): void {
     const token = localStorage.getItem('token');
@@ -73,13 +108,24 @@ export class MovieCardComponent implements OnInit {
     );
   }
 
-  // Ensure this method is properly defined
+  /**
+   * @method loadFavoriteMovies
+   * @description Loads the user's favorite movies from local storage and updates the favoriteMovies Set.
+   */
+
   loadFavoriteMovies(): void {
     const savedFavorites = localStorage.getItem('favoriteMovies');
     if (savedFavorites) {
       this.favoriteMovies = new Set(JSON.parse(savedFavorites));
     }
   }
+
+  /**
+   * @method toggleFavorite
+   * @description Adds or removes a movie from the user's favorites. If the movie is already a favorite, it removes it;
+   * otherwise, it adds it to the favorites.
+   * @param {any} movie - The movie object to be toggled as a favorite.
+   */
 
   toggleFavorite(movie: any): void {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -114,9 +160,21 @@ export class MovieCardComponent implements OnInit {
     }
   }
 
+  /**
+   * @method isFavorite
+   * @description Checks if a movie is marked as a favorite.
+   * @param {any} movie - The movie object to check.
+   * @returns {boolean} - Returns true if the movie is a favorite, otherwise false.
+   */
+
   isFavorite(movie: any): boolean {
     return this.favoriteMovies.has(movie._id);
   }
+
+  /**
+   * @method saveFavoriteMovies
+   * @description Saves the favorite movies to local storage.
+   */
 
   saveFavoriteMovies(): void {
     localStorage.setItem(
@@ -127,7 +185,13 @@ export class MovieCardComponent implements OnInit {
 
   // All dialogs below:
 
-  // Open Main Actor Dialog
+  /**
+   * @method openActorDialog
+   * @description Opens a dialog to display details of the main actor.
+   * @param {any} actor - The actor object containing actor details.
+   * @param {Event} event - The event object to prevent default behavior.
+   */
+
   openActorDialog(actor: any, event: Event): void {
     event.preventDefault();
     event.stopPropagation();
@@ -137,7 +201,13 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  // Open Supporting Actor Dialog
+  /**
+   * @method openSupportingActorDialog
+   * @description Opens a dialog to display details of the supporting actor.
+   * @param {any} actor - The actor object containing actor details.
+   * @param {Event} event - The event object to prevent default behavior.
+   */
+
   openSupportingActorDialog(actor: any, event: Event): void {
     event.preventDefault();
     event.stopPropagation();
@@ -147,7 +217,13 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  // Open Genre Dialog
+  /**
+   * @method openGenreDialog
+   * @description Opens a dialog to display details of the movie's genre.
+   * @param {any} genre - The genre object containing genre details.
+   * @param {Event} event - The event object to prevent default behavior.
+   */
+
   openGenreDialog(genre: any, event: Event): void {
     event.preventDefault();
     event.stopPropagation();
@@ -157,7 +233,13 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  // Open Description Dialog
+  /**
+   * @method openDescriptionDialog
+   * @description Opens a dialog to display the description of the movie.
+   * @param {any} movie - The movie object containing the description.
+   * @param {Event} event - The event object to prevent default behavior.
+   */
+
   openDescriptionDialog(movie: any, event: Event): void {
     event.preventDefault();
     event.stopPropagation();
